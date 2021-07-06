@@ -27,15 +27,18 @@ class AdminLoginPage extends AdminPanel
      *
      * @return AdminPanel
      */
-    public function login(string $userName, string $userPassword): AdminPanel
+    public function login(string $userName, string $userPassword, bool $isRetry = false): AdminPanel
     {
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
         $I->retryClick($this->userAccountLoginButton);
-
         $I->wait(3);
-
+        
+        if ($I->seePageHasElement($this->userAccountLoginButton) && !$isRetry) {
+            $this->login($userName, $userPassword, true);
+        }
+        
         $adminPanel = new AdminPanel($I);
         //$I->waitForElement($adminPanel->adminNavigation);
         $I->selectBaseFrame();
