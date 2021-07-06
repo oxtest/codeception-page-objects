@@ -34,6 +34,9 @@ class AdminLoginPage extends AdminPanel
         $I->fillField($this->userAccountLoginPassword, $userPassword);
         $I->click($this->userAccountLoginButton);
 
+        $uri = $I->grabFromCurrentUrl();
+        codecept_debug($uri);
+
         $adminPanel = new AdminPanel($I);
         $I->waitForElement($adminPanel->adminNavigation);
         $I->selectBaseFrame();
