@@ -32,7 +32,10 @@ class AdminLoginPage extends AdminPanel
         $I = $this->user;
         $I->fillField($this->userAccountLoginName, $userName);
         $I->fillField($this->userAccountLoginPassword, $userPassword);
-        $I->click($this->userAccountLoginButton);
+        $I->retryClick($this->userAccountLoginButton);
+
+        $I->waitForPageLoad();
+        $I->wait(1);
 
         $adminPanel = new AdminPanel($I);
         $I->waitForElement($adminPanel->adminNavigation);
